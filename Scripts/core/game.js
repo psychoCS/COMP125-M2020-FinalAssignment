@@ -22,6 +22,9 @@ let Game = (function () {
     let rollButton;
     let dice1Label;
     let dice2Label;
+    let leftRoll;
+    let rightRoll;
+    let rollLine;
     //rolls tallies
     let R1 = 0;
     let R2 = 0;
@@ -122,24 +125,18 @@ let Game = (function () {
         diceTableBackground = new Core.GameObject("background", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
         stage.addChild(diceTableBackground);
         // Buttons
-        rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X + 135, Config.Game.CENTER_Y + 176, true);
+        rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
         stage.addChild(rollButton);
         // Labels
-        dice1Label = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X, Config.Game.CENTER_Y - 175, true);
+        dice1Label = new UIObjects.Label("Value1", "40px", "Consolas", "#FFFFFF", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y, true);
         stage.addChild(dice1Label);
-        creditLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X - 94, Config.Game.CENTER_Y + 108, true);
-        stage.addChild(creditLabel);
-        winningsLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X + 94, Config.Game.CENTER_Y + 108, true);
-        stage.addChild(winningsLabel);
-        betLabel = new UIObjects.Label("9999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X, Config.Game.CENTER_Y + 108, true);
-        stage.addChild(betLabel);
+        dice2Label = new UIObjects.Label("Value2", "40px", "Consolas", "#FFFFFF", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y, true);
+        stage.addChild(dice2Label);
         // Reel GameObjects
-        leftReel = new Core.GameObject("star", Config.Game.CENTER_X - 79, Config.Game.CENTER_Y - 12, true);
-        stage.addChild(leftReel);
-        middleReel = new Core.GameObject("america", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
-        stage.addChild(middleReel);
-        rightReel = new Core.GameObject("thor", Config.Game.CENTER_X + 78, Config.Game.CENTER_Y - 12, true);
-        stage.addChild(rightReel);
+        leftRoll = new Core.GameObject("star", Config.Game.CENTER_X - 79, Config.Game.CENTER_Y - 12, true);
+        stage.addChild(leftRoll);
+        rightRoll = new Core.GameObject("thor", Config.Game.CENTER_X + 78, Config.Game.CENTER_Y - 12, true);
+        stage.addChild(rightRoll);
         // Bet Line
         rollLine = new Core.GameObject("bet_line", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
         stage.addChild(rollLine);
@@ -147,20 +144,10 @@ let Game = (function () {
     function interfaceLogic() {
         rollButton.on("click", () => {
             // reel test
-            let Rolls = Rolls();
+            let rolls = Rolls();
             // example of how to replace the images in the Rolls
-            leftReel.image = assets.getResult(Rolls[0]);
-            middleReel.image = assets.getResult(Rolls[1]);
-            rightReel.image = assets.getResult(Rolls[2]);
-        });
-        ResetButton.on("click", () => {
-            //document.getElementById("betLabel").reset() as HTMLImageElement;
-            console.log("ResetButton Button Clicked");
-        });
-        ExitButton.on("click", () => {
-            window.open("your current page URL", "_self", "");
-            window.close();
-            console.log("ExitButton Button Clicked");
+            leftRoll.image = assets.getResult(rolls[0]);
+            rightRoll.image = assets.getResult(rolls[1]);
         });
     }
     /**
@@ -168,14 +155,8 @@ let Game = (function () {
      *
      */
     function Main() {
-        console.log(`%c Main Function`, "color: grey; font-size: 14px; font-weight: bold;");
-        exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
-        stage.addChild(exampleLabel);
-        exampleButton = new UIObjects.Button("button", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
-        stage.addChild(exampleButton);
-        exampleButton.on("click", () => {
-            console.log("example button clicked");
-        });
+        buildInterface();
+        interfaceLogic();
     }
     window.addEventListener("load", Preload);
 })();
