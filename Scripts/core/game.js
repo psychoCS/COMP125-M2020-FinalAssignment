@@ -16,8 +16,6 @@ let Game = (function () {
     let canvas = document.getElementsByTagName("canvas")[0];
     let stage;
     let assets;
-    let exampleLabel;
-    let exampleButton;
     let diceTableBackground;
     let rollButton;
     let dice1Label;
@@ -33,12 +31,12 @@ let Game = (function () {
     let R5 = 0;
     let R6 = 0;
     let assetManifest = [
-        { id: "1", src: "./Assets/images/1.png" },
-        { id: "2", src: "./Assets/images/2.png" },
-        { id: "3", src: "./Assets/images/3.png" },
-        { id: "4", src: "./Assets/images/4.png" },
-        { id: "5", src: "./Assets/images/5.png" },
-        { id: "6", src: "./Assets/images/6.png" },
+        { id: "R1", src: "./Assets/images/1.png" },
+        { id: "R2", src: "./Assets/images/2.png" },
+        { id: "R3", src: "./Assets/images/3.png" },
+        { id: "R4", src: "./Assets/images/4.png" },
+        { id: "R5", src: "./Assets/images/5.png" },
+        { id: "R6", src: "./Assets/images/6.png" },
         { id: "backButton", src: "./Assets/images/startButton.png" },
         { id: "background", src: "./Assets/images/background.png" },
         { id: "blank", src: "./Assets/images/blank.png" },
@@ -90,30 +88,30 @@ let Game = (function () {
         var rollLine = [" ", " "];
         var outCome = [0, 0];
         for (var roll = 0; roll < 2; roll++) {
-            outCome[roll] = Math.floor(Math.random() * 6) + 1;
+            outCome[roll] = Math.floor(Math.random() * 12 + 1);
             switch (outCome[roll]) {
-                case checkRoll(outCome[roll], 1, 1): // 16.6% probability
-                    rollLine[roll] = "1";
+                case checkRoll(outCome[roll], 1, 2): // 16.6% probability
+                    rollLine[roll] = "R1";
                     R1++;
                     break;
-                case checkRoll(outCome[roll], 2, 2): // 16.6% probability
-                    rollLine[roll] = "2";
+                case checkRoll(outCome[roll], 3, 4): // 16.6% probability
+                    rollLine[roll] = "R2";
                     R2++;
                     break;
-                case checkRoll(outCome[roll], 3, 3): // 16.6% probability
-                    rollLine[roll] = "3";
+                case checkRoll(outCome[roll], 5, 6): // 16.6% probability
+                    rollLine[roll] = "R3";
                     R3++;
                     break;
-                case checkRoll(outCome[roll], 4, 4): //  16.6% probability
-                    rollLine[roll] = "4";
+                case checkRoll(outCome[roll], 7, 8): //  16.6% probability
+                    rollLine[roll] = "R4";
                     R4++;
                     break;
-                case checkRoll(outCome[roll], 5, 5): //  16.6% probability
-                    rollLine[roll] = "5";
+                case checkRoll(outCome[roll], 9, 10): //  16.6% probability
+                    rollLine[roll] = "R5";
                     R5++;
                     break;
-                case checkRoll(outCome[roll], 6, 6): //  16.6% probability
-                    rollLine[roll] = "6";
+                case checkRoll(outCome[roll], 11, 12): //  16.6% probability
+                    rollLine[roll] = "R6";
                     R6++;
                     break;
             }
@@ -133,9 +131,9 @@ let Game = (function () {
         dice2Label = new UIObjects.Label("Value2", "40px", "Consolas", "#FFFFFF", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y, true);
         stage.addChild(dice2Label);
         // Reel GameObjects
-        leftRoll = new Core.GameObject("star", Config.Game.CENTER_X - 79, Config.Game.CENTER_Y - 12, true);
+        leftRoll = new Core.GameObject("1", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y - 12, true);
         stage.addChild(leftRoll);
-        rightRoll = new Core.GameObject("thor", Config.Game.CENTER_X + 78, Config.Game.CENTER_Y - 12, true);
+        rightRoll = new Core.GameObject("2", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y - 12, true);
         stage.addChild(rightRoll);
         // Bet Line
         rollLine = new Core.GameObject("bet_line", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
@@ -143,7 +141,7 @@ let Game = (function () {
     }
     function interfaceLogic() {
         rollButton.on("click", () => {
-            // reel test
+            // roll test
             let rolls = Rolls();
             // example of how to replace the images in the Rolls
             leftRoll.image = assets.getResult(rolls[0]);
@@ -157,6 +155,8 @@ let Game = (function () {
     function Main() {
         buildInterface();
         interfaceLogic();
+        rollButton = new UIObjects.Button("button", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
+        stage.addChild(rollButton);
     }
     window.addEventListener("load", Preload);
 })();
