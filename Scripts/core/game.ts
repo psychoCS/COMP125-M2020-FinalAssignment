@@ -21,10 +21,12 @@ let Game = (function () {
   let diceTableBackground: Core.GameObject;
   let rollButton: UIObjects.Button;
   let dice1Label: UIObjects.Label;
-  let dice2Label: UIObjects.Label;
   let leftRoll: Core.GameObject;
+  let dice2Label: UIObjects.Label;
   let rightRoll: Core.GameObject;
   let rollLine: Core.GameObject;
+  let exampleLabel: UIObjects.Label;
+  let exampleButton: UIObjects.Button;
 
   //rolls tallies
   let R1 = 0;
@@ -35,12 +37,12 @@ let Game = (function () {
   let R6 = 0;
 
   let assetManifest = [
-    { id: "R1", src: "./Assets/images/1.png" },
-    { id: "R2", src: "./Assets/images/2.png" },
-    { id: "R3", src: "./Assets/images/3.png" },
-    { id: "R4", src: "./Assets/images/4.png" },
-    { id: "R5", src: "./Assets/images/5.png" },
-    { id: "R6", src: "./Assets/images/6.png" },
+    { id: "1", src: "./Assets/images/1.png" },
+    { id: "2", src: "./Assets/images/2.png" },
+    { id: "3", src: "./Assets/images/3.png" },
+    { id: "4", src: "./Assets/images/4.png" },
+    { id: "5", src: "./Assets/images/5.png" },
+    { id: "6", src: "./Assets/images/6.png" },
     { id: "backButton", src: "./Assets/images/startButton.png" },
     { id: "background", src: "./Assets/images/background.png" },
     { id: "blank", src: "./Assets/images/blank.png" },
@@ -141,7 +143,7 @@ let Game = (function () {
   }
 
   function buildInterface(): void {
-    // Slot Machine Background
+    // Dice Table Background
     diceTableBackground = new Core.GameObject(
       "background",
       Config.Game.CENTER_X,
@@ -192,7 +194,7 @@ let Game = (function () {
     stage.addChild(leftRoll);
 
     rightRoll = new Core.GameObject(
-      "2",
+      "3",
       Config.Game.CENTER_X + 194,
       Config.Game.CENTER_Y - 12,
       true
@@ -228,14 +230,6 @@ let Game = (function () {
     buildInterface();
 
     interfaceLogic();
-
-    rollButton = new UIObjects.Button(
-      "button",
-      Config.Game.CENTER_X,
-      Config.Game.CENTER_Y + 100,
-      true
-    );
-    stage.addChild(rollButton);
   }
 
   window.addEventListener("load", Preload);

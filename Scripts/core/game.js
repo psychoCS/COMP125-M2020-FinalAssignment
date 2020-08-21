@@ -19,10 +19,12 @@ let Game = (function () {
     let diceTableBackground;
     let rollButton;
     let dice1Label;
-    let dice2Label;
     let leftRoll;
+    let dice2Label;
     let rightRoll;
     let rollLine;
+    let exampleLabel;
+    let exampleButton;
     //rolls tallies
     let R1 = 0;
     let R2 = 0;
@@ -31,12 +33,12 @@ let Game = (function () {
     let R5 = 0;
     let R6 = 0;
     let assetManifest = [
-        { id: "R1", src: "./Assets/images/1.png" },
-        { id: "R2", src: "./Assets/images/2.png" },
-        { id: "R3", src: "./Assets/images/3.png" },
-        { id: "R4", src: "./Assets/images/4.png" },
-        { id: "R5", src: "./Assets/images/5.png" },
-        { id: "R6", src: "./Assets/images/6.png" },
+        { id: "1", src: "./Assets/images/1.png" },
+        { id: "2", src: "./Assets/images/2.png" },
+        { id: "3", src: "./Assets/images/3.png" },
+        { id: "4", src: "./Assets/images/4.png" },
+        { id: "5", src: "./Assets/images/5.png" },
+        { id: "6", src: "./Assets/images/6.png" },
         { id: "backButton", src: "./Assets/images/startButton.png" },
         { id: "background", src: "./Assets/images/background.png" },
         { id: "blank", src: "./Assets/images/blank.png" },
@@ -119,7 +121,7 @@ let Game = (function () {
         return rollLine;
     }
     function buildInterface() {
-        // Slot Machine Background
+        // Dice Table Background
         diceTableBackground = new Core.GameObject("background", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
         stage.addChild(diceTableBackground);
         // Buttons
@@ -133,7 +135,7 @@ let Game = (function () {
         // Reel GameObjects
         leftRoll = new Core.GameObject("1", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y - 12, true);
         stage.addChild(leftRoll);
-        rightRoll = new Core.GameObject("2", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y - 12, true);
+        rightRoll = new Core.GameObject("3", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y - 12, true);
         stage.addChild(rightRoll);
         // Bet Line
         rollLine = new Core.GameObject("bet_line", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
@@ -155,8 +157,6 @@ let Game = (function () {
     function Main() {
         buildInterface();
         interfaceLogic();
-        rollButton = new UIObjects.Button("button", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
-        stage.addChild(rollButton);
     }
     window.addEventListener("load", Preload);
 })();
