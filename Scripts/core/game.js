@@ -8,7 +8,7 @@ Description: Final Assignment
 Program: COMP125 M2020
 Date: 21 / 08 / 2020
 Website: Thiago The Dice Roller
-File Description: The codes that make dice`s rolling properly.
+File Description: The codes that make dice`s rolling  properly.
 
 */
 let Game = (function () {
@@ -18,6 +18,17 @@ let Game = (function () {
     let assets;
     let exampleLabel;
     let exampleButton;
+    let diceTableBackground;
+    let rollButton;
+    let dice1Label;
+    let dice2Label;
+    //rolls tallies
+    let R1 = 0;
+    let R2 = 0;
+    let R3 = 0;
+    let R4 = 0;
+    let R5 = 0;
+    let R6 = 0;
     let assetManifest = [
         { id: "1", src: "./Assets/images/1.png" },
         { id: "2", src: "./Assets/images/2.png" },
@@ -62,6 +73,95 @@ let Game = (function () {
      */
     function Update() {
         stage.update();
+    }
+    /* Utility function to check if a value falls within a range of bounds */
+    function checkRoll(value, lowerBounds, upperBounds) {
+        if (value >= lowerBounds && value <= upperBounds) {
+            return value;
+        }
+        else {
+            return !value;
+        }
+    }
+    function Rolls() {
+        var rollLine = [" ", " "];
+        var outCome = [0, 0];
+        for (var roll = 0; roll < 2; roll++) {
+            outCome[roll] = Math.floor(Math.random() * 6) + 1;
+            switch (outCome[roll]) {
+                case checkRoll(outCome[roll], 1, 1): // 16.6% probability
+                    rollLine[roll] = "1";
+                    R1++;
+                    break;
+                case checkRoll(outCome[roll], 2, 2): // 16.6% probability
+                    rollLine[roll] = "2";
+                    R2++;
+                    break;
+                case checkRoll(outCome[roll], 3, 3): // 16.6% probability
+                    rollLine[roll] = "3";
+                    R3++;
+                    break;
+                case checkRoll(outCome[roll], 4, 4): //  16.6% probability
+                    rollLine[roll] = "4";
+                    R4++;
+                    break;
+                case checkRoll(outCome[roll], 5, 5): //  16.6% probability
+                    rollLine[roll] = "5";
+                    R5++;
+                    break;
+                case checkRoll(outCome[roll], 6, 6): //  16.6% probability
+                    rollLine[roll] = "6";
+                    R6++;
+                    break;
+            }
+        }
+        return rollLine;
+    }
+    function buildInterface() {
+        // Slot Machine Background
+        diceTableBackground = new Core.GameObject("background", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
+        stage.addChild(diceTableBackground);
+        // Buttons
+        rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X + 135, Config.Game.CENTER_Y + 176, true);
+        stage.addChild(rollButton);
+        // Labels
+        dice1Label = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X, Config.Game.CENTER_Y - 175, true);
+        stage.addChild(dice1Label);
+        creditLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X - 94, Config.Game.CENTER_Y + 108, true);
+        stage.addChild(creditLabel);
+        winningsLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X + 94, Config.Game.CENTER_Y + 108, true);
+        stage.addChild(winningsLabel);
+        betLabel = new UIObjects.Label("9999", "20px", "Consolas", "#FF0000", Config.Game.CENTER_X, Config.Game.CENTER_Y + 108, true);
+        stage.addChild(betLabel);
+        // Reel GameObjects
+        leftReel = new Core.GameObject("star", Config.Game.CENTER_X - 79, Config.Game.CENTER_Y - 12, true);
+        stage.addChild(leftReel);
+        middleReel = new Core.GameObject("america", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
+        stage.addChild(middleReel);
+        rightReel = new Core.GameObject("thor", Config.Game.CENTER_X + 78, Config.Game.CENTER_Y - 12, true);
+        stage.addChild(rightReel);
+        // Bet Line
+        rollLine = new Core.GameObject("bet_line", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
+        stage.addChild(rollLine);
+    }
+    function interfaceLogic() {
+        rollButton.on("click", () => {
+            // reel test
+            let Rolls = Rolls();
+            // example of how to replace the images in the Rolls
+            leftReel.image = assets.getResult(Rolls[0]);
+            middleReel.image = assets.getResult(Rolls[1]);
+            rightReel.image = assets.getResult(Rolls[2]);
+        });
+        ResetButton.on("click", () => {
+            //document.getElementById("betLabel").reset() as HTMLImageElement;
+            console.log("ResetButton Button Clicked");
+        });
+        ExitButton.on("click", () => {
+            window.open("your current page URL", "_self", "");
+            window.close();
+            console.log("ExitButton Button Clicked");
+        });
     }
     /**
      * This is the main function of the Game (where all the fun happens)
