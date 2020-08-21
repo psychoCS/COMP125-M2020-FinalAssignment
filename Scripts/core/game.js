@@ -23,8 +23,6 @@ let Game = (function () {
     let dice2Label;
     let rightRoll;
     let rollLine;
-    let exampleLabel;
-    let exampleButton;
     //rolls tallies
     let R1 = 0;
     let R2 = 0;
@@ -90,7 +88,8 @@ let Game = (function () {
         var rollLine = [" ", " "];
         var outCome = [0, 0];
         for (var roll = 0; roll < 2; roll++) {
-            outCome[roll] = Math.floor(Math.random() * 12 + 1);
+            outCome[roll] = Util.Mathf.RandomRange(1, 12);
+            console.log(outCome[roll]);
             switch (outCome[roll]) {
                 case checkRoll(outCome[roll], 1, 2): // 16.6% probability
                     rollLine[roll] = "R1";
@@ -125,17 +124,17 @@ let Game = (function () {
         diceTableBackground = new Core.GameObject("background", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
         stage.addChild(diceTableBackground);
         // Buttons
-        rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
+        rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X, Config.Game.CENTER_Y + 68, true);
         stage.addChild(rollButton);
         // Labels
-        dice1Label = new UIObjects.Label("Value1", "40px", "Consolas", "#FFFFFF", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y, true);
+        dice1Label = new UIObjects.Label("4", "100px", "Consolas", "#FFFFFF", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y + 140, true);
         stage.addChild(dice1Label);
-        dice2Label = new UIObjects.Label("Value2", "40px", "Consolas", "#FFFFFF", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y, true);
+        leftRoll = new Core.GameObject("4", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y - 80, true);
+        stage.addChild(leftRoll);
+        dice2Label = new UIObjects.Label("3", "100px", "Consolas", "#FFFFFF", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y + 140, true);
         stage.addChild(dice2Label);
         // Reel GameObjects
-        leftRoll = new Core.GameObject("1", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y - 12, true);
-        stage.addChild(leftRoll);
-        rightRoll = new Core.GameObject("3", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y - 12, true);
+        rightRoll = new Core.GameObject("3", Config.Game.CENTER_X + 194, Config.Game.CENTER_Y - 80, true);
         stage.addChild(rightRoll);
         // Bet Line
         rollLine = new Core.GameObject("bet_line", Config.Game.CENTER_X, Config.Game.CENTER_Y - 12, true);
