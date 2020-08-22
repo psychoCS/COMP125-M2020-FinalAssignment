@@ -21,18 +21,10 @@ let Game = (function () {
   let diceTableBackground: Core.GameObject;
   let rollButton: UIObjects.Button;
   let dice1Label: UIObjects.Label;
-  let leftRoll: Core.GameObject;
+  let firstRoll: Core.GameObject;
   let dice2Label: UIObjects.Label;
-  let rightRoll: Core.GameObject;
+  let secondRoll: Core.GameObject;
   let rollLine: Core.GameObject;
-
-  //rolls tallies
-  let R1 = 0;
-  let R2 = 0;
-  let R3 = 0;
-  let R4 = 0;
-  let R5 = 0;
-  let R6 = 0;
 
   let assetManifest = [
     { id: "1", src: "./Assets/images/1.png" },
@@ -65,9 +57,9 @@ let Game = (function () {
   }
 
   /**
-   * This method initializes the CreateJS (EaselJS) Library
-   * It sets the framerate to 60 FPS and sets up the main Game Loop (Update)
-   */
+  This method initializes the CreateJS (EaselJS) Library
+  It sets the framerate to 60 FPS and sets up the main Game Loop (Update)
+  */
   function Start(): void {
     console.log(
       `%c Start Function`,
@@ -83,65 +75,20 @@ let Game = (function () {
     Main();
   }
 
-  /**
-   * This function is triggered every frame (16ms)
-   * The stage is then erased and redrawn
-   */
+  /*
+   This function is triggered every frame (16ms)
+   The stage is then erased and redrawn
+  */
   function Update(): void {
     stage.update();
   }
 
-  /* Utility function to check if a value falls within a range of bounds */
-  function checkRoll(
-    value: number,
-    lowerBounds: number,
-    upperBounds: number
-  ): number | boolean {
-    if (value >= lowerBounds && value <= upperBounds) {
-      return value;
-    } else {
-      return !value;
-    }
-  }
+  function Main(): void {
+    console.log(
+      `%c Main Function`,
+      "color: grey; font-size: 14px; font-weight: bold;"
+    );
 
-  function Rolls(): string[] {
-    var rollLine = [" ", " "];
-    var outCome = [0, 0];
-
-    for (var roll = 0; roll < 2; roll++) {
-      outCome[roll] = Util.Mathf.RandomRange(1, 12);
-      console.log(outCome[roll]);
-      switch (outCome[roll]) {
-        case checkRoll(outCome[roll], 1, 2): // 16.6% probability
-          rollLine[roll] = "R1";
-          R1++;
-          break;
-        case checkRoll(outCome[roll], 3, 4): // 16.6% probability
-          rollLine[roll] = "R2";
-          R2++;
-          break;
-        case checkRoll(outCome[roll], 5, 6): // 16.6% probability
-          rollLine[roll] = "R3";
-          R3++;
-          break;
-        case checkRoll(outCome[roll], 7, 8): //  16.6% probability
-          rollLine[roll] = "R4";
-          R4++;
-          break;
-        case checkRoll(outCome[roll], 9, 10): //  16.6% probability
-          rollLine[roll] = "R5";
-          R5++;
-          break;
-        case checkRoll(outCome[roll], 11, 12): //  16.6% probability
-          rollLine[roll] = "R6";
-          R6++;
-          break;
-      }
-    }
-    return rollLine;
-  }
-
-  function buildInterface(): void {
     // Dice Table Background
     diceTableBackground = new Core.GameObject(
       "background",
@@ -160,76 +107,56 @@ let Game = (function () {
     );
     stage.addChild(rollButton);
 
-    // Labels
-    dice1Label = new UIObjects.Label(
-      "4",
-      "100px",
-      "Consolas",
-      "#FFFFFF",
-      Config.Game.CENTER_X - 194,
-      Config.Game.CENTER_Y + 140,
-      true
-    );
-    stage.addChild(dice1Label);
-
-    leftRoll = new Core.GameObject(
-      "4",
-      Config.Game.CENTER_X - 194,
-      Config.Game.CENTER_Y - 80,
-      true
-    );
-    stage.addChild(leftRoll);
-
-    dice2Label = new UIObjects.Label(
-      "3",
-      "100px",
-      "Consolas",
-      "#FFFFFF",
-      Config.Game.CENTER_X + 194,
-      Config.Game.CENTER_Y + 140,
-      true
-    );
-    stage.addChild(dice2Label);
-
-    // Reel GameObjects
-
-    rightRoll = new Core.GameObject(
-      "3",
-      Config.Game.CENTER_X + 194,
-      Config.Game.CENTER_Y - 80,
-      true
-    );
-    stage.addChild(rightRoll);
-
-    // Bet Line
-    rollLine = new Core.GameObject(
-      "bet_line",
-      Config.Game.CENTER_X,
-      Config.Game.CENTER_Y - 12,
-      true
-    );
-    stage.addChild(rollLine);
-  }
-
-  function interfaceLogic(): void {
     rollButton.on("click", () => {
-      // roll test
-      let rolls = Rolls();
+      console.log("Dices rolled...");
 
-      // example of how to replace the images in the Rolls
-      leftRoll.image = assets.getResult(rolls[0]) as HTMLImageElement;
-      rightRoll.image = assets.getResult(rolls[1]) as HTMLImageElement;
+      stage.removeAllChildren();
+      stage.addChild(diceTableBackground);
+      stage.addChild(rollButton);
+
+      // Dice 1
+      let firstDice = Math.floor(Util.Mathf.RandomRange(1, 6)).toString();
+      firstRoll = new Core.GameObject(
+        firstDice,
+        Config.Game.CENTER_X - 194,
+        Config.Game.CENTER_Y - 80,
+        true
+      );
+      stage.addChild(firstRoll);
+
+      dice1Label = new UIObjects.Label(
+        firstDice,
+        "100px",
+        "Consolas",
+        "#FFFFFF",
+        Config.Game.CENTER_X - 194,
+        Config.Game.CENTER_Y + 140,
+        true
+      );
+      stage.addChild(dice1Label);
+
+      // Dice 2
+      let secondDice = Math.floor(Util.Mathf.RandomRange(1, 6)).toString();
+
+      secondRoll = new Core.GameObject(
+        secondDice,
+        Config.Game.CENTER_X + 194,
+        Config.Game.CENTER_Y - 80,
+        true
+      );
+      stage.addChild(secondRoll);
+
+      dice2Label = new UIObjects.Label(
+        secondDice,
+        "100px",
+        "Consolas",
+        "#FFFFFF",
+        Config.Game.CENTER_X + 194,
+        Config.Game.CENTER_Y + 140,
+        true
+      );
+      stage.addChild(dice2Label);
     });
-  }
-
-  /**
-   * This is the main function of the Game (where all the fun happens)
-   *
-   */
-  function Main(): void {
-    buildInterface();
-
-    interfaceLogic();
   }
 
   window.addEventListener("load", Preload);
