@@ -73,9 +73,10 @@ let Game = (function () {
         // Dice Table Background
         diceTableBackground = new Core.GameObject("background", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
         stage.addChild(diceTableBackground);
-        // Buttons
+        // Roll Button a little lower than the middle
         rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X, Config.Game.CENTER_Y + 68, true);
         stage.addChild(rollButton);
+        // When the Roll button is clicked...
         rollButton.on("click", () => {
             console.log("Dices rolled...");
             // Play the sound after the first roll
@@ -85,16 +86,18 @@ let Game = (function () {
                 createjs.Sound.play(soundID);
             }
             loadSound();
+            //clean the previous results to open space for the new one
             stage.removeAllChildren();
             stage.addChild(diceTableBackground);
             stage.addChild(rollButton);
-            // Dice 1
+            // Dice 1 (left) show the 'face' of the die according to the number
             let firstDice = Math.floor(Util.Mathf.RandomRange(1, 6)).toString();
             firstRoll = new Core.GameObject(firstDice, Config.Game.CENTER_X - 194, Config.Game.CENTER_Y - 80, true);
             stage.addChild(firstRoll);
+            // And present the correct label for it.
             dice1Label = new UIObjects.Label(firstDice, "100px", "Consolas", "#FFFFFF", Config.Game.CENTER_X - 194, Config.Game.CENTER_Y + 140, true);
             stage.addChild(dice1Label);
-            // Dice 2
+            // Same thing for the second die
             let secondDice = Math.floor(Util.Mathf.RandomRange(1, 6)).toString();
             secondRoll = new Core.GameObject(secondDice, Config.Game.CENTER_X + 194, Config.Game.CENTER_Y - 80, true);
             stage.addChild(secondRoll);

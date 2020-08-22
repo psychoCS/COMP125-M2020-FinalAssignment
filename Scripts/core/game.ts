@@ -60,6 +60,7 @@ let Game = (function () {
   This method initializes the CreateJS (EaselJS) Library
   It sets the framerate to 60 FPS and sets up the main Game Loop (Update)
   */
+
   function Start(): void {
     console.log(
       `%c Start Function`,
@@ -98,7 +99,7 @@ let Game = (function () {
     );
     stage.addChild(diceTableBackground);
 
-    // Buttons
+    // Roll Button a little lower than the middle
     rollButton = new UIObjects.Button(
       "rollButton",
       Config.Game.CENTER_X,
@@ -107,6 +108,7 @@ let Game = (function () {
     );
     stage.addChild(rollButton);
 
+    // When the Roll button is clicked...
     rollButton.on("click", () => {
       console.log("Dices rolled...");
 
@@ -118,11 +120,12 @@ let Game = (function () {
       }
       loadSound();
 
+      //clean the previous results to open space for the new one
       stage.removeAllChildren();
       stage.addChild(diceTableBackground);
       stage.addChild(rollButton);
 
-      // Dice 1
+      // Dice 1 (left) show the 'face' of the die according to the number
       let firstDice = Math.floor(Util.Mathf.RandomRange(1, 6)).toString();
       firstRoll = new Core.GameObject(
         firstDice,
@@ -132,6 +135,7 @@ let Game = (function () {
       );
       stage.addChild(firstRoll);
 
+      // And present the correct label for it.
       dice1Label = new UIObjects.Label(
         firstDice,
         "100px",
@@ -143,7 +147,7 @@ let Game = (function () {
       );
       stage.addChild(dice1Label);
 
-      // Dice 2
+      // Same thing for the second die
       let secondDice = Math.floor(Util.Mathf.RandomRange(1, 6)).toString();
 
       secondRoll = new Core.GameObject(
