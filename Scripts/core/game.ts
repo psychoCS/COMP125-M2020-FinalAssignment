@@ -110,6 +110,14 @@ let Game = (function () {
     rollButton.on("click", () => {
       console.log("Dices rolled...");
 
+      // Play the sound after the first roll
+      let soundID = "roll";
+      function loadSound() {
+        createjs.Sound.registerSound("./Assets/sounds/roll.wav", soundID);
+        createjs.Sound.play(soundID);
+      }
+      loadSound();
+
       stage.removeAllChildren();
       stage.addChild(diceTableBackground);
       stage.addChild(rollButton);
